@@ -2,17 +2,19 @@
 #include <string>
 #include <iomanip>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 struct studentas {
   string vardas="", pavarde="";
   int paz[3] = {0}, egz=0;
-  double rez=0;
+  double rez=0, med=0;
 };
 
 void ivestis(studentas& temp);
 void isvedimas(studentas temp[], int n);
 double galutinis(studentas& temp);
+double mediana(studentas& temp);
 
 int main() {
   int n;
@@ -41,12 +43,13 @@ void ivestis(studentas& temp) {
 }
 
 void isvedimas(studentas temp[], int n) {
-  cout << left << setw(15) << "Pavarde" << setw(15) << "Vardas" << setw(20) << "Galutinis (Vid.)" << endl;
-  cout << setfill('-') << setw(50) << '-' << setfill(' ') << endl;
+  cout << left << setw(15) << "Pavarde" << setw(15) << "Vardas" << setw(20) << "Galutinis (Vid.) / Galutinis (Med.)" << endl;
+  cout << setfill('-') << setw(70) << '-' << setfill(' ') << endl;
 
   for (int i=0; i<n; i++) {
     temp[i].rez = galutinis(temp[i]);
-    cout << setw(15) << temp[i].vardas << setw(15) << temp[i].pavarde << fixed << setprecision(2) << temp[i].rez << endl;
+    temp[i].med = mediana(temp[i]);
+    cout << setw(15) << temp[i].vardas << setw(15) << temp[i].pavarde << setw(19) << fixed << setprecision(2) << temp[i].rez << temp[i].med << endl;
   }
 }
 
@@ -60,4 +63,19 @@ double galutinis(studentas& temp) {
   sum += temp.egz; kiek++;
 
   return sum*1.0 / kiek;
+}
+
+double mediana(studentas& temp) {
+  int a[3+1];
+  for (int i=0; i<3; i++) a[i] = temp.paz[i];
+  a[3] = temp.egz;
+
+  for (int i=0; i<3; i++) {
+    for (int j=i+1; j<4; j++) {
+      if (a[i] > a[j])
+        swap(a[i], a[j]);
+    }
+  }
+
+  return (a[1] + a[2]) / 2;
 }
