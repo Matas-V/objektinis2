@@ -57,7 +57,7 @@ int main() {
       generavimas(mas[i]);
     else
       ivestis(mas[i]);
-    // mas[i].a.reserve(2);
+    mas[i].paz.reserve(2);
   }
   isvedimas(mas, n, med);
   return 0;
