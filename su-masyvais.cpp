@@ -1,12 +1,11 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
-#include <vector>
 #include <algorithm>
 #include <numeric>
 using namespace std;
 
-#define arr_size 10000
+#define arr_size 1000
 
 const string A[10] = { "Augustas",  "Tadas", "Matas", "Lukas", "Ignas", "Joris", "Simas", "Juozas", "Jonas", "Mykolas" };
 const string B[10] = { "Griskevicius",  "Brazinskas", "Stanulionis", "Maironis", "Dauksa", "Zalionis", "Lapinskas", "Dabulis", "Sakalauskas", "Pakuckas" };
@@ -14,8 +13,7 @@ const string P[10] = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
 
 struct studentas {
   string vardas="", pavarde="";
-  int egz=0;
-  vector<int> paz;
+  int paz[100], egz=0, k=0;
   double rez=0;
 };
 
@@ -30,7 +28,7 @@ int main() {
   int n=0;
   string med, gen, k;
   bool pass=0;
-  studentas mas[arr_size];
+  studentas mas[1000];
   srand(time(0));
 
   input_check(gen, "Ar duomenis ivedinesite(1) pats ar sugeneruoti(0)?");
@@ -57,7 +55,6 @@ int main() {
       generavimas(mas[i]);
     else
       ivestis(mas[i]);
-    // mas[i].a.reserve(2);
   }
   isvedimas(mas, n, med);
   return 0;
@@ -81,8 +78,8 @@ void generavimas(studentas& temp) {
   pk = rand() % 10 + 1;
   for (int i=0; i<pk; i++) {
     j = rand() % 10;
-    temp.paz.push_back(stoi(P[j]));
-    temp.paz.reserve(temp.paz.size() + 1);
+    temp.paz[temp.k] = stoi(P[j]);
+    temp.k++;
   }
   j = rand() % 10; temp.egz = stoi(P[j]);
 }
@@ -94,13 +91,13 @@ void ivestis(studentas& temp) {
   cout << "Iveskite pavarde: "; cin >> temp.pavarde;
 
   while(p != "0") {
-    cout << "Iveskite " << temp.paz.size()+1 << "-a(-i) pazymi arba 0, jei norite baigti: ";
+    cout << "Iveskite " << temp.k+1 << "-a(-i) pazymi arba 0, jei norite baigti: ";
     cin >> p;
     for (int i=0; i<10; i++)
       if (p == P[i]) paz=true;
     if (p != "0" && paz) {
-      temp.paz.push_back(stoi(p));
-      temp.paz.reserve(temp.paz.size() + 1);
+      temp.paz[temp.k] = stoi(p);
+      temp.k++;
     }
     paz=false;
   }
@@ -128,9 +125,9 @@ void isvedimas(studentas temp[], int n, string med) {
 
 double galutinis(studentas& temp, string med) {
   double v=0;
-  if (temp.paz.size() > 0) {
+  if (temp.k > 0) {
     if (med == "0") {
-      v = accumulate(temp.paz.begin(), temp.paz.end(), v) * 1.0 / temp.paz.size();
+      v = accumulate(temp.paz, temp.paz + temp.k, v) * 1.0 / temp.k;
     }
     else v = mediana(temp);
   }
@@ -139,14 +136,14 @@ double galutinis(studentas& temp, string med) {
 }
 
 double mediana(studentas& temp) {
-  sort(temp.paz.begin(), temp.paz.end());
+  sort(temp.paz, temp.paz + temp.k);
 
-  if (temp.paz.size() % 2 == 0) {
-    int nr = temp.paz.size() / 2;
+  if (temp.k % 2 == 0) {
+    int nr = temp.k / 2;
     int b = (temp.paz[nr] + temp.paz[nr-1]) / 2;
     return b;
   } else {
-    int nr = temp.paz.size() / 2;
+    int nr = temp.k / 2;
     return temp.paz[nr];
   }
 }
