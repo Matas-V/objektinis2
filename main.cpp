@@ -7,10 +7,7 @@
 using namespace std;
 
 #define arr_size 10000
-
-const string A[10] = { "Augustas",  "Tadas", "Matas", "Lukas", "Ignas", "Joris", "Simas", "Juozas", "Jonas", "Mykolas" };
-const string B[10] = { "Griskevicius",  "Brazinskas", "Stanulionis", "Maironis", "Dauksa", "Zalionis", "Lapinskas", "Dabulis", "Sakalauskas", "Pakuckas" };
-const string P[10] = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
+const string P[11] = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
 
 struct studentas {
   string vardas="", pavarde="";
@@ -74,6 +71,8 @@ void input_check(string &inp, string text) {
 }
 
 void generavimas(studentas& temp) {
+  string A[10] = { "Augustas",  "Tadas", "Matas", "Lukas", "Ignas", "Joris", "Simas", "Juozas", "Jonas", "Mykolas" };
+  string B[10] = { "Griskevicius",  "Brazinskas", "Stanulionis", "Maironis", "Dauksa", "Zalionis", "Lapinskas", "Dabulis", "Sakalauskas", "Pakuckas" };
   int j=rand() % 10, pk;
   temp.vardas = A[j];
   temp.pavarde = B[j];
@@ -88,17 +87,17 @@ void generavimas(studentas& temp) {
 }
 
 void ivestis(studentas& temp) {
-  string p="1";
+  string p="0";
   bool paz=false;
   cout << "Iveskite varda: "; cin >> temp.vardas;
   cout << "Iveskite pavarde: "; cin >> temp.pavarde;
 
-  while(p != "0") {
-    cout << "Iveskite " << temp.paz.size()+1 << "-a(-i) pazymi arba 0, jei norite baigti: ";
+  while(p != "q") {
+    cout << "Iveskite " << temp.paz.size()+1 << "-a(-i) pazymi arba q, jei norite baigti: ";
     cin >> p;
-    for (int i=0; i<10; i++)
+    for (int i=0; i<11; i++)
       if (p == P[i]) paz=true;
-    if (p != "0" && paz) {
+    if (p != "q" && paz) {
       temp.paz.push_back(stoi(p));
       temp.paz.reserve(temp.paz.size() + 1);
     }

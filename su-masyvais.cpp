@@ -5,19 +5,17 @@
 #include <numeric>
 using namespace std;
 
-#define arr_size 1000
-
-const string A[10] = { "Augustas",  "Tadas", "Matas", "Lukas", "Ignas", "Joris", "Simas", "Juozas", "Jonas", "Mykolas" };
-const string B[10] = { "Griskevicius",  "Brazinskas", "Stanulionis", "Maironis", "Dauksa", "Zalionis", "Lapinskas", "Dabulis", "Sakalauskas", "Pakuckas" };
-const string P[10] = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
+#define arr_size 10000
+const string P[11] = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
 
 struct studentas {
   string vardas="", pavarde="";
-  int paz[100], egz=0, k=0;
+  int egz=0, k=0, *paz = nullptr;
   double rez=0;
 };
 
 void ivestis(studentas& temp);
+int* resizeArray(int* mas, int n);
 void generavimas(studentas& temp);
 void isvedimas(studentas temp[], int n, string med);
 double galutinis(studentas& temp, string med);
@@ -28,7 +26,7 @@ int main() {
   int n=0;
   string med, gen, k;
   bool pass=0;
-  studentas mas[1000];
+  studentas mas[arr_size];
   srand(time(0));
 
   input_check(gen, "Ar duomenis ivedinesite(1) pats ar sugeneruoti(0)?");
@@ -70,7 +68,20 @@ void input_check(string &inp, string text) {
   }
 }
 
+int* resizeArray(int* mas, int n) {
+  int* naujas;
+  naujas = new int[n+1];
+
+  for(int i=0; i<n; i++)
+    naujas[i] = mas[i];
+
+  delete[] mas;
+  return naujas;
+}
+
 void generavimas(studentas& temp) {
+  string A[10] = { "Augustas",  "Tadas", "Matas", "Lukas", "Ignas", "Joris", "Simas", "Juozas", "Jonas", "Mykolas" };
+  string B[10] = { "Griskevicius",  "Brazinskas", "Stanulionis", "Maironis", "Dauksa", "Zalionis", "Lapinskas", "Dabulis", "Sakalauskas", "Pakuckas" };
   int j=rand() % 10, pk;
   temp.vardas = A[j];
   temp.pavarde = B[j];
@@ -78,24 +89,31 @@ void generavimas(studentas& temp) {
   pk = rand() % 10 + 1;
   for (int i=0; i<pk; i++) {
     j = rand() % 10;
-    temp.paz[temp.k] = stoi(P[j]);
+    temp.paz = resizeArray(temp.paz, temp.k);
+    if (temp.paz)
+      temp.paz[temp.k] = stoi(P[j]);
+    else {
+      temp.paz = new int[1];
+      temp.paz[0] = stoi(P[j]);
+    }
     temp.k++;
   }
   j = rand() % 10; temp.egz = stoi(P[j]);
 }
 
 void ivestis(studentas& temp) {
-  string p="1";
+  string p="0";
   bool paz=false;
   cout << "Iveskite varda: "; cin >> temp.vardas;
   cout << "Iveskite pavarde: "; cin >> temp.pavarde;
 
-  while(p != "0") {
-    cout << "Iveskite " << temp.k+1 << "-a(-i) pazymi arba 0, jei norite baigti: ";
+  while(p != "q") {
+    cout << "Iveskite " << temp.k+1 << "-a(-i) pazymi arba q, jei norite baigti: ";
     cin >> p;
-    for (int i=0; i<10; i++)
+    for (int i=0; i<11; i++)
       if (p == P[i]) paz=true;
-    if (p != "0" && paz) {
+    if (p != "q" && paz) {
+      temp.paz = resizeArray(temp.paz, temp.k);
       temp.paz[temp.k] = stoi(p);
       temp.k++;
     }
@@ -105,7 +123,7 @@ void ivestis(studentas& temp) {
   while(!paz) {
     cout << "Iveskite egzamino iverti: ";
     cin >> p;
-    for (int i=0; i<10; i++)
+    for (int i=0; i<11; i++)
       if (p == P[i]) paz=true;
     if (paz) temp.egz = stoi(p);
   }
