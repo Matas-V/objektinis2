@@ -1,61 +1,109 @@
 #include "headers/main.h"
 
-void readFromFile(vector<studentas> &mas, string med) {
+void readFromFile(vector<studentas> &mas, string med, string filename) {
   studentas a;
   string eil, delim = "ND";
+  stringstream my_buffer;
   ifstream rf;
-  rf.exceptions(std::ifstream::failbit);
-  int nd=0;
+  duration<double> diff;
+  // rf.exceptions(std::ifstream::failbit);
+  int nd=0, p;
   size_t pos=0;
 
+  auto start = high_resolution_clock::now();
+
   try {
-    rf.open("kursiokai.txt");
+    rf.open(filename);
     getline(rf, eil);
     while (( pos = eil.find(delim)) != std::string::npos) {
       nd++;
       eil.erase(0, pos + delim.length());
     }
 
-    while(!rf.eof()) {
-      getline(rf, eil);
-      mas.reserve(mas.size() + 1);
-      mas.push_back(dealWithLine(eil));
+    // my_buffer << rf.rdbuf();
+    
+
+    // while (!my_buffer.eof()) {
+    //   my_buffer >> a.vardas >> a.pavarde;
+    //   for (int i=0; i<nd; i++) {
+    //     my_buffer >> p;
+    //     a.paz.push_back(p);
+    //   }
+    //   my_buffer >> a.egz;
+    //   mas.reserve(mas.size() + 1);
+    //   mas.push_back(a);
+    // }
+
+    while(rf) {
+      if (!rf.eof()) {
+        getline(rf, eil);
+        mas.reserve(mas.size() + 1);
+        a = dealWithLine(eil, nd);
+        a.rez = galutinis(a, med);
+        mas.push_back(a);
+      } else break;
     }
-    sort(mas.begin(), mas.end(), [](studentas a, studentas b){
-      return a.vardas < b.vardas;
-    });
     rf.close();
+
+    auto end = high_resolution_clock::now();
+    diff = end - start;
+    cout << "Failo is " << mas.size()-1 << " irasu nuskaitymo laikas: " << diff.count() << endl;
+
+    start = high_resolution_clock::now();
+    sort(mas.begin(), mas.end(), [](studentas a, studentas b){
+      return a.rez > b.rez;
+    });
+    end = high_resolution_clock::now();
+    diff = end - start;
+    cout << mas.size()-1 << " irasu rusiavimas pagal pazymius su sort laikas: " << diff.count() << endl;
+
+    // cout << filename << " nuskaitytas!" << endl;
   } catch(ifstream::failure e) {
-    cout << "KLAIDA! Patikrinkite ar turite duomenu faila kursiokai.txt" << endl;
+    // kazkodel visada sita popina no matter what, del while nuskaitymo idk
+    cout << "KLAIDA! Patikrinkite, ar tikrai turite faila " << filename << endl;
   }
 }
 
-studentas dealWithLine(string str) {
+studentas dealWithLine(string str, int nd) {
+  stringstream ss;
   studentas a;
-  int count=0;
+  int count=0, p;
   string word = "";
-  for (int i=0; i<str.length(); i++) {
-    if (str[i] == ' ' && count < 2) {
-      if (word != "") {
-        count == 0 ? a.vardas = word : a.pavarde = word;
-        count++;
-      }
-      word = "";
-    } else if (str[i] == ' ' && count >= 2) {
-      if (word != "") {
-        try {
-          a.paz.push_back(stoi(word));
-        } catch(const std::exception& e) {
-          a.paz.push_back(0);
-        }
-        count++;
-      }
-      word = "";
-    } else {
-      word = word + str[i];
-    }
+  ss.clear();
+  ss << str;
+
+  ss >> a.vardas >> a.pavarde;
+  for (int i=0; i<nd; i++) {
+    ss >> p;
+    a.paz.push_back(p);
   }
-  a.egz = stoi(word);
+  ss >> a.egz;
+
+  // printf("%s %s %d %d \n", a.vardas.c_str(), a.pavarde.c_str(), a.paz.at(2), a.egz);
+
+  // for (int i=0; i<str.length(); i++) {
+  //   if (str[i] == ' ' && count < 2) {
+  //     if (word != "") {
+  //       count == 0 ? a.vardas = word : a.pavarde = word;
+  //       count++;
+  //     }
+  //     word = "";
+  //   } else if (str[i] == ' ' && count >= 2) {
+  //     if (word != "") {
+  //       if (count < nd) {
+  //         try {
+  //           a.paz.push_back(stoi(word));
+  //         } catch(const std::exception& e) {
+  //           a.paz.push_back(0);
+  //         }
+  //         count++;
+  //       } else a.egz = stoi(word);
+  //     }
+  //     word = "";
+  //   } else {
+  //     word = word + str[i];
+  //   }
+  // }
 
   return a;
 }
@@ -130,24 +178,43 @@ void isvedimas(vector<studentas> temp, int n, string med) {
   }
 }
 
-void failoIsvedimas(vector<studentas> temp, string med) {
-  ofstream wf("rezultatai.txt");
-  string outputas="";
+void failoIsvedimas(vector<studentas> temp, string med, string fileKiet, string fileVarg) {
   char buffer[1000];
+  string outkiet="", outvarg="";
+  duration<double> diff;
 
-  sprintf(buffer, "%-20s %-20s", "Vardas", "Pavarde"); outputas += buffer;
+  sprintf(buffer, "%-20s %-20s", "Vardas", "Pavarde");
+  outkiet += buffer; outvarg += buffer;
   if (med == "1") sprintf(buffer, "%-16s \n", "Galutinis (Med.)");
   else sprintf(buffer, "%-16s \n", "Galutinis (Vid.)");
-  outputas += buffer;
-  sprintf(buffer, "----------------------------------------------------------\n"); outputas += buffer;
+  outkiet += buffer; outvarg += buffer;
+  sprintf(buffer, "----------------------------------------------------------\n");
+  outkiet += buffer; outvarg += buffer;
+
+  auto start = high_resolution_clock::now();
 
   for (int i=0; i<temp.size(); i++) {
-    temp.at(i).rez = galutinis(temp.at(i), med);
+    // temp.at(i).rez = galutinis(temp.at(i), med);
     sprintf(buffer, "%-20s %-20s %-20.2f \n", temp.at(i).vardas.c_str(), temp.at(i).pavarde.c_str(), temp.at(i).rez);
-    outputas += buffer;
+    if (temp.at(i).rez >= 5) {
+      outkiet += buffer;
+    } else outvarg += buffer;
   }
-  wf << outputas;
-  cout << "Duomenys isvesti i rezultatu faila!" << endl;
+
+  auto end = high_resolution_clock::now();
+  diff = end - start;
+  cout << temp.size()-1 << " irasu dalijimo i dvi grupes laikas: " << diff.count() << endl;
+
+  start = high_resolution_clock::now();
+  ofstream wfk(fileKiet);
+  ofstream wfv(fileVarg);
+  wfk << outkiet;
+  wfv << outvarg;
+  wfk.close();
+  wfv.close();
+  end = high_resolution_clock::now();
+  diff = end - start;
+  cout << temp.size()-1 << " irasu kietiaku ir vargsiuku irasymo i failus laikas: " << diff.count() << endl;
 }
 
 double galutinis(studentas& temp, string med) {
@@ -173,4 +240,34 @@ double mediana(studentas& temp) {
     int nr = temp.paz.size() / 2;
     return temp.paz[nr];
   }
+}
+
+void failuGeneravimas(string filename, int studKiek, int kiek) {
+  ofstream wf(filename);
+  string outputas="", a="";
+  char buffer[1000];
+
+  sprintf(buffer, "%-20s %-20s", "Vardas", "Pavarde"); outputas += buffer;
+  for (int i=0; i<kiek; i++) {
+    a = "ND" + to_string(i+1);
+    sprintf(buffer, "%-10s", a.c_str());
+    outputas += buffer;
+  }
+  sprintf(buffer, "%-10s \n", "Egz."); outputas += buffer;
+
+  for (int i=0; i<studKiek; i++) {
+    string vard = "Vardas"+to_string(i);
+    string pavard = "Pavarde"+to_string(i);
+    sprintf(buffer, "%-20s %-20s", vard.c_str(), pavard.c_str());
+    outputas += buffer;
+    for (int j=0; j<kiek; j++) {
+      sprintf(buffer, "%-10d", rand()%10+1);
+      outputas += buffer;
+    }
+    sprintf(buffer, "%-10d \n", rand()%10+1);
+    outputas += buffer;
+  }
+  wf << outputas;
+  cout << "Duomenu failas " << filename << " sukurtas!" << endl;
+  wf.close();
 }

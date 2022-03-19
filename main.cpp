@@ -2,8 +2,8 @@
 #include "funkcijos.cpp"
 
 int main() {
-  int n=0;
-  string med, gen, k;
+  int n=0, kiek;
+  string med, gen, k, genf;
   bool pass=0;
   vector<studentas> mas;
   mas.reserve(2);
@@ -16,12 +16,28 @@ int main() {
     med = rand() % 10 >= 5 ? "1" : "0";
     pass = 1;
   } else {
+    input_check(genf, "Ar reikalingas failu generavimas? Taip(1) ar ne(0)");
     input_check(gen, "Ar duomenis ivedinesite ranka(1) ar skaityti is failo(0)?");
+
+    if (genf == "1") {
+      cout << "Kiek pazymiu tures kiekvienas studentas? "; cin >> kiek;
+      for (int i=0; i<5; i++)
+        failuGeneravimas(fileNames[i], stoi(regex_replace(fileNames[i], regex("[^0-9]*([0-9]+).*"), string("$1"))), kiek);
+    }
     input_check(med, "Pasirinkite ka noresit skaiciuoti galutinio ivertinimo: vidurki(0) ar mediana(1)?");
 
     if (gen == "0") {
-      readFromFile(mas, med);
-      failoIsvedimas(mas, med);
+      for (int i=0; i<5; i++) {
+        auto start = high_resolution_clock::now();
+        readFromFile(mas, med, fileNames[i]);
+        failoIsvedimas(mas, med, outfileKiet[i], outfileVarg[i]);
+        auto end = high_resolution_clock::now();
+        duration<double> diff = end - start;
+        cout << mas.size()-1 << " irasu testo laikas: " << diff.count() << endl;
+        mas.clear();
+        cout << endl;
+        system("pause");
+      }
     } else {
       while(!pass) {
         cout << "Kiek studentu noresite ivesti?" << endl;
