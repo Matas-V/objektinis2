@@ -7,55 +7,62 @@ void readFromFile(vector<studentas> &mas, string med, string filename) {
   ifstream rf;
   duration<double> diff;
   // rf.exceptions(std::ifstream::failbit);
-  int nd=0, p;
+  int nd=0, p, lines;
   size_t pos=0;
 
-  auto start = high_resolution_clock::now();
-
   try {
+    auto start = high_resolution_clock::now();
+
     rf.open(filename);
-    getline(rf, eil);
-    while (( pos = eil.find(delim)) != std::string::npos) {
-      nd++;
-      eil.erase(0, pos + delim.length());
-    }
-
-    // my_buffer << rf.rdbuf();
-    
-
-    // while (!my_buffer.eof()) {
-    //   my_buffer >> a.vardas >> a.pavarde;
-    //   for (int i=0; i<nd; i++) {
-    //     my_buffer >> p;
-    //     a.paz.push_back(p);
-    //   }
-    //   my_buffer >> a.egz;
-    //   mas.reserve(mas.size() + 1);
-    //   mas.push_back(a);
-    // }
-
-    while(rf) {
-      if (!rf.eof()) {
-        getline(rf, eil);
-        mas.reserve(mas.size() + 1);
-        a = dealWithLine(eil, nd);
-        a.rez = galutinis(a, med);
-        mas.push_back(a);
-      } else break;
-    }
+    my_buffer << rf.rdbuf();
     rf.close();
 
     auto end = high_resolution_clock::now();
     diff = end - start;
-    cout << "Failo is " << mas.size()-1 << " irasu nuskaitymo laikas: " << diff.count() << endl;
+    cout << "Failo irasu nuskaitymo laikas: " << diff.count() << endl;
 
+    getline(my_buffer, eil);
+    while (( pos = eil.find(delim)) != std::string::npos) {
+      nd++;
+      eil.erase(0, pos + delim.length());
+    }
+    
     start = high_resolution_clock::now();
-    sort(mas.begin(), mas.end(), [](studentas a, studentas b){
-      return a.rez > b.rez;
-    });
+
+    while (!my_buffer.eof()) {
+      my_buffer >> a.vardas >> a.pavarde;
+      for (int i=0; i<nd; i++) {
+        my_buffer >> p;
+        a.paz.push_back(p);
+      } 
+      my_buffer >> a.egz;
+      mas.reserve(mas.size() + 1);
+      // cout << mas.size() << endl;
+      mas.push_back(a);
+    }
+    my_buffer.clear();
+
     end = high_resolution_clock::now();
     diff = end - start;
-    cout << mas.size()-1 << " irasu rusiavimas pagal pazymius su sort laikas: " << diff.count() << endl;
+    cout << "Failo is " << mas.size()-1 << " duomenu paruosimo laikas: " << diff.count() << endl;
+
+    // while(rf) {
+    //   if (!rf.eof()) {
+    //     getline(rf, eil);
+    //     mas.reserve(mas.size() + 1);
+    //     a = dealWithLine(eil, nd);
+    //     a.rez = galutinis(a, med);
+    //     mas.push_back(a);
+    //   } else break;
+    // }
+
+    // start = high_resolution_clock::now();
+    // sort(mas.begin(), mas.end(), [](studentas a, studentas b){
+    //   return a.rez > b.rez;
+    // });
+    // end = high_resolution_clock::now();
+    // diff = end - start;
+    // cout << mas.size()-1 << " irasu rusiavimas pagal pazymius su sort laikas: " << diff.count() << endl;
 
     // cout << filename << " nuskaitytas!" << endl;
   } catch(ifstream::failure e) {
@@ -166,7 +173,7 @@ studentas ivestis() {
   return naujas;
 }
 
-void isvedimas(vector<studentas> temp, int n, string med) {
+void isvedimas(vector<studentas> &temp, int n, string med) {
   printf("%-20s %-20s", "Vardas", "Pavarde");
   if (med == "1") printf("%-16s \n", "Galutinis (Med.)");
   else printf("%-16s \n", "Galutinis (Vid.)");
@@ -178,10 +185,11 @@ void isvedimas(vector<studentas> temp, int n, string med) {
   }
 }
 
-void failoIsvedimas(vector<studentas> temp, string med, string fileKiet, string fileVarg) {
+void failoIsvedimas(vector<studentas> &temp, string med, string fileKiet, string fileVarg) {
   char buffer[1000];
   string outkiet="", outvarg="";
   duration<double> diff;
+  // stringstream perdaryt vietoj sprintf
 
   sprintf(buffer, "%-20s %-20s", "Vardas", "Pavarde");
   outkiet += buffer; outvarg += buffer;
@@ -193,10 +201,11 @@ void failoIsvedimas(vector<studentas> temp, string med, string fileKiet, string 
 
   auto start = high_resolution_clock::now();
 
-  for (int i=0; i<temp.size(); i++) {
-    // temp.at(i).rez = galutinis(temp.at(i), med);
-    sprintf(buffer, "%-20s %-20s %-20.2f \n", temp.at(i).vardas.c_str(), temp.at(i).pavarde.c_str(), temp.at(i).rez);
-    if (temp.at(i).rez >= 5) {
+  // auto panaudojimas cikle for
+  for (auto &stud : temp) {
+    // stud.rez = galutinis(temp.at(i), med);
+    sprintf(buffer, "%-20s %-20s %-20.2f \n", stud.vardas.c_str(), stud.pavarde.c_str(), stud.rez);
+    if (stud.rez >= 5) {
       outkiet += buffer;
     } else outvarg += buffer;
   }
