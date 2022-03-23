@@ -32,6 +32,7 @@ void read_file(vector <studentas>& sar, string file, string med, int index) {
       st.paz.clear();
       sar.push_back(st);
     }
+    sar.shrink_to_fit();
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> diff = end - start;
     cout << "Failo nuskaitymas ir sudejimas i vektoriu uztruko: " << diff.count() << endl;
@@ -123,7 +124,7 @@ void isvedimas(vector<studentas> &temp, int n, string med) {
 
 void failoIsvedimas(vector<studentas> &temp, string med, string fileKiet, string fileVarg) {
   string outkiet="", outvarg="";
-  vector <string> kiet, varg;
+  vector<studentas> kiet, varg;
   duration<double> diff;
   char buffer[1000];
 
@@ -138,19 +139,25 @@ void failoIsvedimas(vector<studentas> &temp, string med, string fileKiet, string
   auto start = high_resolution_clock::now();
 
   for (auto &stud : temp) {
-    sprintf(buffer, "%-20s %-20s %-20.2f \n", stud.vardas.c_str(), stud.pavarde.c_str(), stud.rez);
-    if (stud.rez >= 5) {
-      kiet.push_back(buffer);
-      outkiet += buffer;
-    } else {
-      varg.push_back(buffer);
-      outvarg += buffer;
-    }
+    if (stud.rez >= 5) kiet.push_back(stud);
+    else varg.push_back(stud);
   }
+  kiet.shrink_to_fit();
+  varg.shrink_to_fit();
 
   auto end = high_resolution_clock::now();
   diff = end - start;
   cout << temp.size()-1 << " irasu dalijimo i du vektorius laikas: " << diff.count() << endl;
+
+  for (auto &stud: kiet) {
+    sprintf(buffer, "%-20s %-20s %-20.2f \n", stud.vardas.c_str(), stud.pavarde.c_str(), stud.rez);
+    outkiet += buffer;
+  }
+
+  for (auto &stud: varg) {
+    sprintf(buffer, "%-20s %-20s %-20.2f \n", stud.vardas.c_str(), stud.pavarde.c_str(), stud.rez);
+    outvarg += buffer;
+  }
 
   start = high_resolution_clock::now();
   ofstream wfk(fileKiet);
