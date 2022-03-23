@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <vector>
 #include <algorithm>
@@ -27,7 +28,7 @@ struct studentas {
 
 studentas ivestis();
 studentas generavimas();
-void readFromFile(vector<studentas> &mas, string med, string filename);
+void read_file(vector <studentas>& sar, string file, string med, int index);
 studentas dealWithLine(string str, int nd);
 void isvedimas(vector<studentas> &temp, int n, string med);
 void failoIsvedimas(vector<studentas> &temp, string med, string fileKiet, string fileVarg);

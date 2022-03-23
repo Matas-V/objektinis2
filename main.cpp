@@ -29,11 +29,10 @@ int main() {
     if (gen == "0") {
       for (int i=0; i<5; i++) {
         auto start = high_resolution_clock::now();
-        readFromFile(mas, med, fileNames[i]);
-        failoIsvedimas(mas, med, outfileKiet[i], outfileVarg[i]);
+        read_file(mas, fileNames[i], med, i);
         auto end = high_resolution_clock::now();
         duration<double> diff = end - start;
-        cout << mas.size()-1 << " irasu testo laikas: " << diff.count() << endl;
+        cout <<"Darbo su failu testo laikas: " << diff.count() << endl;
         mas.clear();
         cout << endl;
         system("pause");
