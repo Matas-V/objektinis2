@@ -18,6 +18,8 @@
 - *Sukurta galimybė automatiškai generuoti studentų duomenų failus.*
 - *Vykdomas programos testavimas su esamais duomenų failais.*
 
+![dasdasda](https://user-images.githubusercontent.com/80633152/159670868-564f85ee-65b2-49cc-9709-89c2d0a52497.png)
+
 ## Įdiegimas naudojant g++ kompiliatorių
 - `git clone https://github.com/Matas-V/objektinis.git`
 - `cd objektinis`
