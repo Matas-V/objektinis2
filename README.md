@@ -1,35 +1,21 @@
 # Objektinis programavimas
 
-## Versija v0.1
-- *Galima įvesti studentų duomenis rankiniu arba automatinio generavimo būdu.*
-- *Galima pasirinkti galutinio įvertinimo skaičiavimą naudojant vidurkį arba medianą namų darbų.*
+## Versija v0.5
+- Šioje versijoje buvo sukurtos trys atskiros programos, kurios kiekviena turėjo po skirtingą konteinerį: vector, list ir deque.
+- Buvo tiriama, kaip pasikeistų programos veikimas ir jos laikas dirbant su skirtingais konteineriais.
 
-## Versija v0.1.1
-- *Patobulinta pirmoji versija, įdiegtas dinamiškumas masyvuose.*
+## Rezultatai programų
+### Vector
+![vector](https://user-images.githubusercontent.com/80633152/160276320-6b86a4e3-6b7d-402e-9178-2e83cb7152ff.png)
 
-## Versija v0.2
-- *Padarytas duomenų skaitymas iš failo.*
+### List
+![list](https://user-images.githubusercontent.com/80633152/160276322-1fa244d1-1e46-44ae-a032-5918facb7da1.png)
 
-## Versija v0.3
-- *Sukurtas heading failas, programa išskaidyta į kelis cpp failus.*
-- *Atlikti keli try catch atvejai.*
+### Deque
+![deque3](https://user-images.githubusercontent.com/80633152/160276325-8e6698d8-c0c9-4243-ac0a-4aa0236b456c.png)
 
-## Versija v0.4
-- *Sukurta galimybė automatiškai generuoti studentų duomenų failus.*
-- *Vykdomas programos testavimas su esamais duomenų failais.*
+### Kompiuterio parametrai
+![params](https://user-images.githubusercontent.com/80633152/160276343-8ee1c0b8-bde6-4a5e-acba-6563569914a3.png)
 
-![dasdasda](https://user-images.githubusercontent.com/80633152/159670868-564f85ee-65b2-49cc-9709-89c2d0a52497.png)
-
-## Įdiegimas naudojant g++ kompiliatorių
-- `git clone https://github.com/Matas-V/objektinis.git`
-- `cd objektinis`
-- `g++ main.cpp -o main`
-- `./main`
-
-## Releas'ai:
-- [**v0.1**](https://github.com/Matas-V/objektinis/releases/tag/v0.1)
-- [**v0.1.1**](https://github.com/Matas-V/objektinis/releases/tag/v0.1.1)
-- [**v0.2**](https://github.com/Matas-V/objektinis/releases/tag/v0.2)
-- [**v0.2.1**](https://github.com/Matas-V/objektinis/releases/tag/v0.2.1)
-- [**v0.3**](https://github.com/Matas-V/objektinis/releases/tag/v0.3)
-- [**v0.4**](https://github.com/Matas-V/objektinis/releases/tag/v0.4)
+### Išvada:
+- Atsižvelgiant į gautus rezultatus, programa greičiausiai atliko darbą su **vector** tipo kontaineriais. Lėčiausiai nuskaitymas ir skirstymas į dvi grupes vyko naudojant **list** tipo kontainerius. Tačiau bendras programos laikas žymiai didesnis būdavo dirbant su **deque** tipo kontaineriu.
