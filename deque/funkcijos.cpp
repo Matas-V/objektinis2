@@ -1,6 +1,6 @@
 #include "headers/main.h"
 
-void read_file(vector <studentas>& sar, string file, string med, int index) {
+void read_file(deque <studentas>& sar, string file, string med, int index) {
   studentas st;
   string line, delim = "ND";
   size_t pos=0;
@@ -33,19 +33,16 @@ void read_file(vector <studentas>& sar, string file, string med, int index) {
       sar.push_back(st);
     }
     sar.shrink_to_fit();
+
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> diff = end - start;
-    cout << "Failo nuskaitymas ir sudejimas i vektoriu uztruko: " << diff.count() << endl;
+    cout << "Failo nuskaitymas ir sudejimas i deque uztruko: " << diff.count() << endl;
 
-    start = std::chrono::high_resolution_clock::now();
     sort(sar.begin(), sar.end(), [](studentas a, studentas b){
       if (a.rez == b.rez) return a.pavarde < b.pavarde;
       return a.rez < b.rez;
     });
-    end = std::chrono::high_resolution_clock::now();
-    diff = end - start;
-    cout << sar.size()-1 << " irasu rusiavimas su sort pagal pazymius laikas: " << diff.count() << endl;
-
+    
     failoIsvedimas(sar, med, outfileKiet[index], outfileVarg[index]);
   } catch(const std::exception& e) {
     cout << "Failas " << file << " nerastas..." << '\n';
@@ -74,7 +71,6 @@ studentas generavimas() {
   for (int i=0; i<pk; i++) {
     j = rand() % 10;
     naujas.paz.push_back(stoi(P[j]));
-    naujas.paz.reserve(naujas.paz.size() + 1);
   }
   j = rand() % 10; naujas.egz = stoi(P[j]);
   return naujas;
@@ -94,7 +90,6 @@ studentas ivestis() {
       if (p == P[i]) paz=true;
     if (p != "q" && paz) {
       naujas.paz.push_back(stoi(p));
-      naujas.paz.reserve(naujas.paz.size() + 1);
     }
     paz=false;
   }
@@ -110,7 +105,7 @@ studentas ivestis() {
   return naujas;
 }
 
-void isvedimas(vector<studentas> &temp, int n, string med) {
+void isvedimas(deque<studentas> &temp, int n, string med) {
   printf("%-20s %-20s", "Vardas", "Pavarde");
   if (med == "1") printf("%-16s \n", "Galutinis (Med.)");
   else printf("%-16s \n", "Galutinis (Vid.)");
@@ -122,9 +117,9 @@ void isvedimas(vector<studentas> &temp, int n, string med) {
   }
 }
 
-void failoIsvedimas(vector<studentas> &temp, string med, string fileKiet, string fileVarg) {
+void failoIsvedimas(deque<studentas> &temp, string med, string fileKiet, string fileVarg) {
   string outkiet="", outvarg="";
-  vector<studentas> kiet, varg;
+  deque<studentas> kiet, varg;
   duration<double> diff;
   char buffer[1000];
 
@@ -147,7 +142,7 @@ void failoIsvedimas(vector<studentas> &temp, string med, string fileKiet, string
 
   auto end = high_resolution_clock::now();
   diff = end - start;
-  cout << temp.size()-1 << " irasu dalijimo i du vektorius laikas: " << diff.count() << endl;
+  cout << temp.size()-1 << " irasu dalijimo i du dequeus laikas: " << diff.count() << endl;
 
   for (auto &stud: kiet) {
     sprintf(buffer, "%-20s %-20s %-20.2f \n", stud.vardas.c_str(), stud.pavarde.c_str(), stud.rez);
@@ -159,16 +154,12 @@ void failoIsvedimas(vector<studentas> &temp, string med, string fileKiet, string
     outvarg += buffer;
   }
 
-  start = high_resolution_clock::now();
   ofstream wfk(fileKiet);
   ofstream wfv(fileVarg);
   wfk << outkiet;
   wfv << outvarg;
   wfk.close();
   wfv.close();
-  end = high_resolution_clock::now();
-  diff = end - start;
-  cout << temp.size()-1 << " irasu kietiaku ir vargsiuku irasymo i failus laikas: " << diff.count() << endl;
 }
 
 double galutinis(studentas& temp, string med) {
@@ -188,11 +179,11 @@ double mediana(studentas& temp) {
 
   if (temp.paz.size() % 2 == 0) {
     int nr = temp.paz.size() / 2;
-    int b = (temp.paz[nr] + temp.paz[nr-1]) / 2;
+    double b = (temp.paz.at(nr) + temp.paz.at(nr-1)) / 2;
     return b;
   } else {
     int nr = temp.paz.size() / 2;
-    return temp.paz[nr];
+    return temp.paz.at(nr);
   }
 }
 
