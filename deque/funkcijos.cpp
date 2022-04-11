@@ -44,6 +44,7 @@ void read_file(deque <studentas>& sar, string file, string med, int index) {
     });
     
     failoIsvedimas(sar, med, outfileKiet[index], outfileVarg[index]);
+    failoIsvedimas2(sar, med, outfileKiet[index], outfileVarg[index]);
   } catch(const std::exception& e) {
     cout << "Failas " << file << " nerastas..." << '\n';
   }
@@ -142,7 +143,7 @@ void failoIsvedimas(deque<studentas> &temp, string med, string fileKiet, string 
 
   auto end = high_resolution_clock::now();
   diff = end - start;
-  cout << temp.size()-1 << " irasu dalijimo i du dequeus laikas: " << diff.count() << endl;
+  cout << "1 strategijos deko skaidymo laikas: " << diff.count() << endl;
 
   for (auto &stud: kiet) {
     sprintf(buffer, "%-20s %-20s %-20.2f \n", stud.vardas.c_str(), stud.pavarde.c_str(), stud.rez);
@@ -150,6 +151,52 @@ void failoIsvedimas(deque<studentas> &temp, string med, string fileKiet, string 
   }
 
   for (auto &stud: varg) {
+    sprintf(buffer, "%-20s %-20s %-20.2f \n", stud.vardas.c_str(), stud.pavarde.c_str(), stud.rez);
+    outvarg += buffer;
+  }
+
+  ofstream wfk(fileKiet);
+  ofstream wfv(fileVarg);
+  wfk << outkiet;
+  wfv << outvarg;
+  wfk.close();
+  wfv.close();
+}
+
+void failoIsvedimas2(deque<studentas> &temp, string med, string fileKiet, string fileVarg) {
+  string outkiet="", outvarg="";
+  deque<studentas> kiet;
+  duration<double> diff;
+  char buffer[1000];
+
+  sprintf(buffer, "%-20s %-20s", "Vardas", "Pavarde");
+  outkiet += buffer; outvarg += buffer;
+  if (med == "1") sprintf(buffer, "%-16s \n", "Galutinis (Med.)");
+  else sprintf(buffer, "%-16s \n", "Galutinis (Vid.)");
+  outkiet += buffer; outvarg += buffer;
+  sprintf(buffer, "----------------------------------------------------------\n");
+  outkiet += buffer; outvarg += buffer;
+
+  auto start = high_resolution_clock::now();
+
+  for (int i=temp.size()-1; i>=0; i--) {
+    if (temp.at(i).rez >= 5) {
+      kiet.push_back(temp.at(i));
+      temp.pop_back();
+    }
+  }
+  kiet.shrink_to_fit();
+
+  auto end = high_resolution_clock::now();
+  diff = end - start;
+  cout << "2 strategijos deko skaidymo laikas: " << diff.count() << endl;
+
+  for (auto &stud: kiet) {
+    sprintf(buffer, "%-20s %-20s %-20.2f \n", stud.vardas.c_str(), stud.pavarde.c_str(), stud.rez);
+    outkiet += buffer;
+  }
+
+  for (auto &stud: temp) {
     sprintf(buffer, "%-20s %-20s %-20.2f \n", stud.vardas.c_str(), stud.pavarde.c_str(), stud.rez);
     outvarg += buffer;
   }

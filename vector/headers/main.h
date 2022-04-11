@@ -36,3 +36,4 @@ double galutinis(studentas& temp, string med);
 double mediana(studentas& temp);
 void input_check(string &inp, string text);
 void failuGeneravimas(string filename, int studKiek, int kiek);
+void failoIsvedimas2(vector<studentas> &temp, string med, string fileKiet, string fileVarg);
