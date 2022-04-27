@@ -187,6 +187,7 @@ void failoIsvedimas2(vector<studentas> &temp, string med, string fileKiet, strin
     }
   }
   kiet.shrink_to_fit();
+  temp.shrink_to_fit();
 
   auto end = high_resolution_clock::now();
   diff = end - start;
