@@ -19,21 +19,41 @@ const string fileNames[5] = { "kursiokai1000.txt", "kursiokai10000.txt", "kursio
 const string outfileKiet[5] = { "kietiakai1000.txt", "kietiakai10000.txt", "kietiakai100000.txt", "kietiakai1000000.txt", "kietiakai10000000.txt" };
 const string outfileVarg[5] = { "vargsiukai1000.txt", "vargsiukai10000.txt", "vargsiukai100000.txt", "vargsiukai1000000.txt", "vargsiukai10000000.txt" };
 
-struct studentas {
-  string vardas="", pavarde="";
-  int egz=0;
-  vector<int> paz;
-  double rez=0;
+class studentas {
+  private:
+    string vardas;
+    string pavarde;
+    int egz;
+    vector<int> paz;
+    double rez;
+  public:
+    studentas() : rez(0), vardas(""), pavarde(""), egz(0) { }
+
+    inline string getVardas() const { return vardas; }
+    void setVardas(string mvardas) { vardas = mvardas; }
+
+    inline string getPavarde() const { return pavarde; }
+    void setPavarde(string mpavarde) { pavarde = mpavarde; }
+
+    inline vector<int> getPazymiai() const { return paz; }
+    void setPazymys(int mpaz);
+    void clearPaz() { paz.clear(); }
+
+    inline int egzas() const { return egz; }
+    void setEgzas(int megz) { egz = megz; }
+
+    inline double galBalas() const { return rez; }
+    void setGalBal(string med);
+
+    void readStudentai(vector<studentas> &sar, string file, string med, int index);
 };
 
 studentas ivestis();
 studentas generavimas();
 void read_file(vector <studentas>& sar, string file, string med, int index);
-studentas dealWithLine(string str, int nd);
 void isvedimas(vector<studentas> &temp, int n, string med);
 void failoIsvedimas(vector<studentas> &temp, string med, string fileKiet, string fileVarg);
-double galutinis(studentas& temp, string med);
-double mediana(studentas& temp);
+double galutinis(string med, vector<int> temp, int egz);
+double mediana(vector<int> temp);
 void input_check(string &inp, string text);
 void failuGeneravimas(string filename, int studKiek, int kiek);
-void failoIsvedimas2(vector<studentas> &temp, string med, string fileKiet, string fileVarg);

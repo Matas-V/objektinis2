@@ -6,6 +6,7 @@ int main() {
   string med, gen, k, genf;
   bool pass=0;
   vector<studentas> mas;
+  studentas S;
   mas.reserve(2);
   srand(time(0));
 
@@ -29,7 +30,7 @@ int main() {
     if (gen == "0") {
       for (int i=0; i<5; i++) {
         auto start = high_resolution_clock::now();
-        read_file(mas, fileNames[i], med, i);
+        S.readStudentai(mas, fileNames[i], med, i);
         auto end = high_resolution_clock::now();
         duration<double> diff = end - start;
         cout <<"Darbo su failu testo laikas: " << diff.count() << endl;

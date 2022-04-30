@@ -1,5 +1,18 @@
 #include "headers/main.h"
 
+void studentas::setPazymys(int mpaz) {
+  paz.reserve(paz.size() + 1);
+  paz.push_back(mpaz);
+};
+
+void studentas::setGalBal(string med) {
+  rez = galutinis(med, paz, egz);
+}
+
+void studentas::readStudentai(vector <studentas>& sar, string file, string med, int index) {
+  read_file(sar, file, med, index);
+}
+
 void read_file(vector <studentas>& sar, string file, string med, int index) {
   studentas st;
   string line, delim = "ND";
@@ -21,15 +34,16 @@ void read_file(vector <studentas>& sar, string file, string med, int index) {
     }
     
     while(!my_buffer.eof()) {
-      my_buffer >> st.vardas;
-      my_buffer >> st.pavarde;
+      my_buffer >> line; st.setVardas(line);
+      my_buffer >> line; st.setPavarde(line);
       for (int i = 0; i < nd; i++){
         my_buffer >> p;
-        st.paz.push_back(p);
+        st.setPazymys(p);
       }
-      my_buffer >> st.egz;
-      st.rez = galutinis(st, med);
-      st.paz.clear();
+      my_buffer >> p;
+      st.setEgzas(p);
+      st.setGalBal(med);
+      st.clearPaz();
       sar.push_back(st);
     }
     sar.shrink_to_fit();
@@ -38,12 +52,11 @@ void read_file(vector <studentas>& sar, string file, string med, int index) {
     cout << "Failo nuskaitymas ir sudejimas i vektoriu uztruko: " << diff.count() << endl;
 
     sort(sar.begin(), sar.end(), [](studentas a, studentas b){
-      if (a.rez == b.rez) return a.pavarde < b.pavarde;
-      return a.rez < b.rez;
+      if (a.galBalas() == b.galBalas()) return a.getVardas() < b.getVardas();
+      return a.galBalas() < b.galBalas();
     });
 
     failoIsvedimas(sar, med, outfileKiet[index], outfileVarg[index]);
-    failoIsvedimas2(sar, med, outfileKiet[index], outfileVarg[index]);
   } catch(const std::exception& e) {
     cout << "Failas " << file << " nerastas..." << '\n';
   }
@@ -64,16 +77,15 @@ studentas generavimas() {
   string A[10] = { "Augustas",  "Tadas", "Matas", "Lukas", "Ignas", "Joris", "Simas", "Juozas", "Jonas", "Mykolas" };
   string B[10] = { "Griskevicius",  "Brazinskas", "Stanulionis", "Maironis", "Dauksa", "Zalionis", "Lapinskas", "Dabulis", "Sakalauskas", "Pakuckas" };
   int j=rand() % 10, pk;
-  naujas.vardas = A[j];
-  naujas.pavarde = B[j];
+  naujas.setVardas(A[j]);
+  naujas.setPavarde(B[j]);
 
   pk = rand() % 10 + 1;
   for (int i=0; i<pk; i++) {
     j = rand() % 10;
-    naujas.paz.push_back(stoi(P[j]));
-    naujas.paz.reserve(naujas.paz.size() + 1);
+    naujas.setPazymys(stoi(P[j]));
   }
-  j = rand() % 10; naujas.egz = stoi(P[j]);
+  j = rand() % 10; naujas.setEgzas(stoi(P[j]));
   return naujas;
 }
 
@@ -81,17 +93,16 @@ studentas ivestis() {
   studentas naujas;
   string p="0";
   bool paz=false;
-  cout << "Iveskite varda: "; cin >> naujas.vardas;
-  cout << "Iveskite pavarde: "; cin >> naujas.pavarde;
+  cout << "Iveskite varda: "; cin >> p; naujas.setVardas(p);
+  cout << "Iveskite pavarde: "; cin >> p; naujas.setPavarde(p);
 
   while(p != "q") {
-    cout << "Iveskite " << naujas.paz.size()+1 << "-a(-i) pazymi arba q, jei norite baigti: ";
+    cout << "Iveskite " << naujas.getPazymiai().size()+1 << "-a(-i) pazymi arba q, jei norite baigti: ";
     cin >> p;
     for (int i=0; i<11; i++)
       if (p == P[i]) paz=true;
     if (p != "q" && paz) {
-      naujas.paz.push_back(stoi(p));
-      naujas.paz.reserve(naujas.paz.size() + 1);
+      naujas.setPazymys(stoi(p));
     }
     paz=false;
   }
@@ -101,7 +112,7 @@ studentas ivestis() {
     cin >> p;
     for (int i=0; i<11; i++)
       if (p == P[i]) paz=true;
-    if (paz) naujas.egz = stoi(p);
+    if (paz) naujas.setEgzas(stoi(p));
   }
 
   return naujas;
@@ -114,57 +125,12 @@ void isvedimas(vector<studentas> &temp, int n, string med) {
   printf("----------------------------------------------------------\n");
 
   for (auto &stud: temp) {
-    stud.rez = galutinis(stud, med);
-    printf("%-20s %-20s %-20.2f \n", stud.vardas.c_str(), stud.pavarde.c_str(), stud.rez);
+    stud.setGalBal(med);
+    printf("%-20s %-20s %-20.2f \n", stud.getVardas().c_str(), stud.getPavarde().c_str(), stud.galBalas());
   }
 }
 
 void failoIsvedimas(vector<studentas> &temp, string med, string fileKiet, string fileVarg) {
-  string outkiet="", outvarg="";
-  vector<studentas> kiet, varg;
-  duration<double> diff;
-  char buffer[1000];
-
-  sprintf(buffer, "%-20s %-20s", "Vardas", "Pavarde");
-  outkiet += buffer; outvarg += buffer;
-  if (med == "1") sprintf(buffer, "%-16s \n", "Galutinis (Med.)");
-  else sprintf(buffer, "%-16s \n", "Galutinis (Vid.)");
-  outkiet += buffer; outvarg += buffer;
-  sprintf(buffer, "----------------------------------------------------------\n");
-  outkiet += buffer; outvarg += buffer;
-
-  auto start = high_resolution_clock::now();
-
-  for (auto &stud : temp) {
-    if (stud.rez >= 5) kiet.push_back(stud);
-    else varg.push_back(stud);
-  }
-  kiet.shrink_to_fit();
-  varg.shrink_to_fit();
-
-  auto end = high_resolution_clock::now();
-  diff = end - start;
-  cout << "1 strategijos vectoriaus skaidymo laikas: " << diff.count() << endl;
-
-  for (auto &stud: kiet) {
-    sprintf(buffer, "%-20s %-20s %-20.2f \n", stud.vardas.c_str(), stud.pavarde.c_str(), stud.rez);
-    outkiet += buffer;
-  }
-
-  for (auto &stud: varg) {
-    sprintf(buffer, "%-20s %-20s %-20.2f \n", stud.vardas.c_str(), stud.pavarde.c_str(), stud.rez);
-    outvarg += buffer;
-  }
-
-  ofstream wfk(fileKiet);
-  ofstream wfv(fileVarg);
-  wfk << outkiet;
-  wfv << outvarg;
-  wfk.close();
-  wfv.close();
-}
-
-void failoIsvedimas2(vector<studentas> &temp, string med, string fileKiet, string fileVarg) {
   string outkiet="", outvarg="";
   vector<studentas> kiet;
   duration<double> diff;
@@ -181,7 +147,7 @@ void failoIsvedimas2(vector<studentas> &temp, string med, string fileKiet, strin
   auto start = high_resolution_clock::now();
 
   for (int i=temp.size()-1; i>=0; i--) {
-    if (temp.at(i).rez >= 5) {
+    if (temp.at(i).galBalas() >= 5) {
       kiet.push_back(temp.at(i));
       temp.pop_back();
     }
@@ -194,12 +160,12 @@ void failoIsvedimas2(vector<studentas> &temp, string med, string fileKiet, strin
   cout << "2 strategijos vectoriaus skaidymo laikas: " << diff.count() << endl;
 
   for (auto &stud: kiet) {
-    sprintf(buffer, "%-20s %-20s %-20.2f \n", stud.vardas.c_str(), stud.pavarde.c_str(), stud.rez);
+    sprintf(buffer, "%-20s %-20s %-20.2f \n", stud.getVardas().c_str(), stud.getPavarde().c_str(), stud.galBalas());
     outkiet += buffer;
   }
 
   for (auto &stud: temp) {
-    sprintf(buffer, "%-20s %-20s %-20.2f \n", stud.vardas.c_str(), stud.pavarde.c_str(), stud.rez);
+    sprintf(buffer, "%-20s %-20s %-20.2f \n", stud.getVardas().c_str(), stud.getPavarde().c_str(), stud.galBalas());
     outvarg += buffer;
   }
 
@@ -211,28 +177,28 @@ void failoIsvedimas2(vector<studentas> &temp, string med, string fileKiet, strin
   wfv.close();
 }
 
-double galutinis(studentas& temp, string med) {
+double galutinis(string med, vector<int> temp, int egz) {
   double v=0;
-  if (temp.paz.size() > 0) {
+  if (temp.size() > 0) {
     if (med == "0") {
-      v = accumulate(temp.paz.begin(), temp.paz.end(), v) * 1.0 / temp.paz.size();
+      v = accumulate(temp.begin(), temp.end(), v) * 1.0 / temp.size();
     }
     else v = mediana(temp);
   }
   
-  return v*0.4 + 0.6*temp.egz;
+  return v*0.4 + 0.6*egz;
 }
 
-double mediana(studentas& temp) {
-  sort(temp.paz.begin(), temp.paz.end());
+double mediana(vector<int> temp) {
+  sort(temp.begin(), temp.end());
 
-  if (temp.paz.size() % 2 == 0) {
-    int nr = temp.paz.size() / 2;
-    double b = (temp.paz[nr] + temp.paz[nr-1]) / 2;
+  if (temp.size() % 2 == 0) {
+    int nr = temp.size() / 2;
+    double b = (temp.at(nr) + temp.at(nr-1)) / 2;
     return b;
   } else {
-    int nr = temp.paz.size() / 2;
-    return temp.paz[nr];
+    int nr = temp.size() / 2;
+    return temp.at(nr);
   }
 }
 
