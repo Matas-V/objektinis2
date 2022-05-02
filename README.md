@@ -5,9 +5,13 @@
 - *Atlikta optimizacijos flag'ų analizė.*
 
 Pasikeitus klasei duomenų tipo iš structūros programos laikas nepakito ryškiai, maždaug išliko toks pat.
+
 *Structūros tipo*
+
 ![tipo vector](https://user-images.githubusercontent.com/80633152/166110279-b8fffb5c-93f8-42ce-a517-0cfc0a28c7b6.png)
+
 *Klasės tipo*
+
 ![o3](https://user-images.githubusercontent.com/80633152/166110289-250bf503-1b3f-49d9-b97a-4ba690f5f6c0.png)
 
 ### Programa sukompiliuota naudojant -O1 flag'ą:
