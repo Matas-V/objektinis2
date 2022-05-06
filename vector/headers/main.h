@@ -46,6 +46,19 @@ class studentas {
     void setGalBal(string med);
 
     void readStudentai(vector<studentas> &sar, string file, string med, int index);
+
+    studentas(const studentas &s) { vardas = s.vardas; pavarde = s.pavarde; egz = s.egz; rez = s.rez; paz = s.paz; }
+    ~studentas() { paz.clear(); }
+    studentas& operator=(const studentas& other) {
+      if (this == &other)
+        return *this;
+      vardas = other.vardas;
+      pavarde = other.pavarde;
+      egz = other.egz;
+      rez = other.rez;
+      paz = other.paz;
+      return *this;
+    }
 };
 
 studentas ivestis();
