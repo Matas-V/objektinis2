@@ -19,15 +19,25 @@ const string fileNames[5] = { "kursiokai1000.txt", "kursiokai10000.txt", "kursio
 const string outfileKiet[5] = { "kietiakai1000.txt", "kietiakai10000.txt", "kietiakai100000.txt", "kietiakai1000000.txt", "kietiakai10000000.txt" };
 const string outfileVarg[5] = { "vargsiukai1000.txt", "vargsiukai10000.txt", "vargsiukai100000.txt", "vargsiukai1000000.txt", "vargsiukai10000000.txt" };
 
-class studentas {
-  private:
+class zmogus {
+  protected:
     string vardas;
     string pavarde;
+  public:
+    inline string getVardas() const { return vardas; }
+    inline string getPavarde() const { return pavarde; }
+    virtual void setVardas(string mvardas) = 0;
+    virtual void setPavarde(string mpavarde) = 0;
+    zmogus() : vardas(""), pavarde("") { }
+};
+
+class studentas : public zmogus {
+  private:
     int egz;
     vector<int> paz;
     double rez;
   public:
-    studentas() : rez(0), vardas(""), pavarde(""), egz(0) { }
+    studentas() : rez(0), egz(0) { }
 
     inline string getVardas() const { return vardas; }
     void setVardas(string mvardas) { vardas = mvardas; }
@@ -47,13 +57,11 @@ class studentas {
 
     void readStudentai(vector<studentas> &sar, string file, string med, int index);
 
-    studentas(const studentas &s) { vardas = s.vardas; pavarde = s.pavarde; egz = s.egz; rez = s.rez; paz = s.paz; }
+    studentas(const studentas &s) { egz = s.egz; rez = s.rez; paz = s.paz; }
     ~studentas() { paz.clear(); }
     studentas& operator=(const studentas& other) {
       if (this == &other)
         return *this;
-      vardas = other.vardas;
-      pavarde = other.pavarde;
       egz = other.egz;
       rez = other.rez;
       paz = other.paz;
