@@ -1,0 +1,206 @@
+\hypertarget{main_8h}{}\doxysection{vector/headers/main.h File Reference}
+\label{main_8h}\index{vector/headers/main.h@{vector/headers/main.h}}
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$iomanip$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$algorithm$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$sstream$>$}\newline
+{\ttfamily \#include $<$numeric$>$}\newline
+{\ttfamily \#include $<$ctime$>$}\newline
+{\ttfamily \#include $<$chrono$>$}\newline
+{\ttfamily \#include $<$regex$>$}\newline
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classzmogus}{zmogus}}
+\item 
+class \mbox{\hyperlink{classstudentas}{studentas}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{main_8h_a388f001621f3c2fb2e514849a0d5c764}{arr\+\_\+size}}~10000
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classstudentas}{studentas}} \mbox{\hyperlink{main_8h_a43020e7f189031a2759a4be6acd8fca8}{ivestis}} ()
+\item 
+\mbox{\hyperlink{classstudentas}{studentas}} \mbox{\hyperlink{main_8h_aee7a772bb74120a2f0ed36381c23b2da}{generavimas}} ()
+\item 
+void \mbox{\hyperlink{main_8h_a73c6ea4617ddbc38bae1a02fec20297b}{read\+\_\+file}} (vector$<$ \mbox{\hyperlink{classstudentas}{studentas}} $>$ \&sar, string file, string med, int index)
+\item 
+void \mbox{\hyperlink{main_8h_a75d20f1e90e822e3328480060686263d}{isvedimas}} (vector$<$ \mbox{\hyperlink{classstudentas}{studentas}} $>$ \&temp, int n, string med)
+\item 
+void \mbox{\hyperlink{main_8h_a3aa0894b0c24ab019b29a79ea588a34c}{failo\+Isvedimas}} (vector$<$ \mbox{\hyperlink{classstudentas}{studentas}} $>$ \&temp, string med, string file\+Kiet, string file\+Varg)
+\item 
+double \mbox{\hyperlink{main_8h_acdc104b2d6cf818a83c9e78904c03b97}{galutinis}} (string med, vector$<$ int $>$ temp, int egz)
+\item 
+double \mbox{\hyperlink{main_8h_a8dbb4a3a78150f05b1d5639fcd00fc1d}{mediana}} (vector$<$ int $>$ temp)
+\item 
+void \mbox{\hyperlink{main_8h_ac40c58c5d52d1861a46bd16a2709cb1e}{input\+\_\+check}} (string \&inp, string text)
+\item 
+void \mbox{\hyperlink{main_8h_adc68b88dd66456ebe56b40c22fb4a967}{failu\+Generavimas}} (string filename, int stud\+Kiek, int kiek)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const string \mbox{\hyperlink{main_8h_a423ec09d529597d980038193d44ca201}{P}} \mbox{[}11\mbox{]} = \{ \char`\"{}0\char`\"{}, \char`\"{}1\char`\"{}, \char`\"{}2\char`\"{}, \char`\"{}3\char`\"{}, \char`\"{}4\char`\"{}, \char`\"{}5\char`\"{}, \char`\"{}6\char`\"{}, \char`\"{}7\char`\"{}, \char`\"{}8\char`\"{}, \char`\"{}9\char`\"{}, \char`\"{}10\char`\"{} \}
+\item 
+const string \mbox{\hyperlink{main_8h_aed2dae0bc1baa0d3c908be81729f0a83}{file\+Names}} \mbox{[}5\mbox{]} = \{ \char`\"{}kursiokai1000.\+txt\char`\"{}, \char`\"{}kursiokai10000.\+txt\char`\"{}, \char`\"{}kursiokai100000.\+txt\char`\"{}, \char`\"{}kursiokai1000000.\+txt\char`\"{}, \char`\"{}kursiokai10000000.\+txt\char`\"{} \}
+\item 
+const string \mbox{\hyperlink{main_8h_a36308d522582b956f320b18fc037d6a7}{outfile\+Kiet}} \mbox{[}5\mbox{]} = \{ \char`\"{}kietiakai1000.\+txt\char`\"{}, \char`\"{}kietiakai10000.\+txt\char`\"{}, \char`\"{}kietiakai100000.\+txt\char`\"{}, \char`\"{}kietiakai1000000.\+txt\char`\"{}, \char`\"{}kietiakai10000000.\+txt\char`\"{} \}
+\item 
+const string \mbox{\hyperlink{main_8h_a440398ec1f4c08cf97bb0e96de2aa9c2}{outfile\+Varg}} \mbox{[}5\mbox{]} = \{ \char`\"{}vargsiukai1000.\+txt\char`\"{}, \char`\"{}vargsiukai10000.\+txt\char`\"{}, \char`\"{}vargsiukai100000.\+txt\char`\"{}, \char`\"{}vargsiukai1000000.\+txt\char`\"{}, \char`\"{}vargsiukai10000000.\+txt\char`\"{} \}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{main_8h_a388f001621f3c2fb2e514849a0d5c764}\label{main_8h_a388f001621f3c2fb2e514849a0d5c764}} 
+\index{main.h@{main.h}!arr\_size@{arr\_size}}
+\index{arr\_size@{arr\_size}!main.h@{main.h}}
+\doxysubsubsection{\texorpdfstring{arr\_size}{arr\_size}}
+{\footnotesize\ttfamily \#define arr\+\_\+size~10000}
+
+
+
+Definition at line \mbox{\hyperlink{main_8h_source_l00016}{16}} of file \mbox{\hyperlink{main_8h_source}{main.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{main_8h_a3aa0894b0c24ab019b29a79ea588a34c}\label{main_8h_a3aa0894b0c24ab019b29a79ea588a34c}} 
+\index{main.h@{main.h}!failoIsvedimas@{failoIsvedimas}}
+\index{failoIsvedimas@{failoIsvedimas}!main.h@{main.h}}
+\doxysubsubsection{\texorpdfstring{failoIsvedimas()}{failoIsvedimas()}}
+{\footnotesize\ttfamily void failo\+Isvedimas (\begin{DoxyParamCaption}\item[{vector$<$ \mbox{\hyperlink{classstudentas}{studentas}} $>$ \&}]{temp,  }\item[{string}]{med,  }\item[{string}]{file\+Kiet,  }\item[{string}]{file\+Varg }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{funkcijos_8cpp_source_l00133}{133}} of file \mbox{\hyperlink{funkcijos_8cpp_source}{funkcijos.\+cpp}}.
+
+\mbox{\Hypertarget{main_8h_adc68b88dd66456ebe56b40c22fb4a967}\label{main_8h_adc68b88dd66456ebe56b40c22fb4a967}} 
+\index{main.h@{main.h}!failuGeneravimas@{failuGeneravimas}}
+\index{failuGeneravimas@{failuGeneravimas}!main.h@{main.h}}
+\doxysubsubsection{\texorpdfstring{failuGeneravimas()}{failuGeneravimas()}}
+{\footnotesize\ttfamily void failu\+Generavimas (\begin{DoxyParamCaption}\item[{string}]{filename,  }\item[{int}]{stud\+Kiek,  }\item[{int}]{kiek }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{funkcijos_8cpp_source_l00205}{205}} of file \mbox{\hyperlink{funkcijos_8cpp_source}{funkcijos.\+cpp}}.
+
+\mbox{\Hypertarget{main_8h_acdc104b2d6cf818a83c9e78904c03b97}\label{main_8h_acdc104b2d6cf818a83c9e78904c03b97}} 
+\index{main.h@{main.h}!galutinis@{galutinis}}
+\index{galutinis@{galutinis}!main.h@{main.h}}
+\doxysubsubsection{\texorpdfstring{galutinis()}{galutinis()}}
+{\footnotesize\ttfamily double galutinis (\begin{DoxyParamCaption}\item[{string}]{med,  }\item[{vector$<$ int $>$}]{temp,  }\item[{int}]{egz }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{funkcijos_8cpp_source_l00180}{180}} of file \mbox{\hyperlink{funkcijos_8cpp_source}{funkcijos.\+cpp}}.
+
+\mbox{\Hypertarget{main_8h_aee7a772bb74120a2f0ed36381c23b2da}\label{main_8h_aee7a772bb74120a2f0ed36381c23b2da}} 
+\index{main.h@{main.h}!generavimas@{generavimas}}
+\index{generavimas@{generavimas}!main.h@{main.h}}
+\doxysubsubsection{\texorpdfstring{generavimas()}{generavimas()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classstudentas}{studentas}} generavimas (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{funkcijos_8cpp_source_l00075}{75}} of file \mbox{\hyperlink{funkcijos_8cpp_source}{funkcijos.\+cpp}}.
+
+\mbox{\Hypertarget{main_8h_ac40c58c5d52d1861a46bd16a2709cb1e}\label{main_8h_ac40c58c5d52d1861a46bd16a2709cb1e}} 
+\index{main.h@{main.h}!input\_check@{input\_check}}
+\index{input\_check@{input\_check}!main.h@{main.h}}
+\doxysubsubsection{\texorpdfstring{input\_check()}{input\_check()}}
+{\footnotesize\ttfamily void input\+\_\+check (\begin{DoxyParamCaption}\item[{string \&}]{inp,  }\item[{string}]{text }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{funkcijos_8cpp_source_l00065}{65}} of file \mbox{\hyperlink{funkcijos_8cpp_source}{funkcijos.\+cpp}}.
+
+\mbox{\Hypertarget{main_8h_a75d20f1e90e822e3328480060686263d}\label{main_8h_a75d20f1e90e822e3328480060686263d}} 
+\index{main.h@{main.h}!isvedimas@{isvedimas}}
+\index{isvedimas@{isvedimas}!main.h@{main.h}}
+\doxysubsubsection{\texorpdfstring{isvedimas()}{isvedimas()}}
+{\footnotesize\ttfamily void isvedimas (\begin{DoxyParamCaption}\item[{vector$<$ \mbox{\hyperlink{classstudentas}{studentas}} $>$ \&}]{temp,  }\item[{int}]{n,  }\item[{string}]{med }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{funkcijos_8cpp_source_l00121}{121}} of file \mbox{\hyperlink{funkcijos_8cpp_source}{funkcijos.\+cpp}}.
+
+\mbox{\Hypertarget{main_8h_a43020e7f189031a2759a4be6acd8fca8}\label{main_8h_a43020e7f189031a2759a4be6acd8fca8}} 
+\index{main.h@{main.h}!ivestis@{ivestis}}
+\index{ivestis@{ivestis}!main.h@{main.h}}
+\doxysubsubsection{\texorpdfstring{ivestis()}{ivestis()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classstudentas}{studentas}} ivestis (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{funkcijos_8cpp_source_l00092}{92}} of file \mbox{\hyperlink{funkcijos_8cpp_source}{funkcijos.\+cpp}}.
+
+\mbox{\Hypertarget{main_8h_a8dbb4a3a78150f05b1d5639fcd00fc1d}\label{main_8h_a8dbb4a3a78150f05b1d5639fcd00fc1d}} 
+\index{main.h@{main.h}!mediana@{mediana}}
+\index{mediana@{mediana}!main.h@{main.h}}
+\doxysubsubsection{\texorpdfstring{mediana()}{mediana()}}
+{\footnotesize\ttfamily double mediana (\begin{DoxyParamCaption}\item[{vector$<$ int $>$}]{temp }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{funkcijos_8cpp_source_l00192}{192}} of file \mbox{\hyperlink{funkcijos_8cpp_source}{funkcijos.\+cpp}}.
+
+\mbox{\Hypertarget{main_8h_a73c6ea4617ddbc38bae1a02fec20297b}\label{main_8h_a73c6ea4617ddbc38bae1a02fec20297b}} 
+\index{main.h@{main.h}!read\_file@{read\_file}}
+\index{read\_file@{read\_file}!main.h@{main.h}}
+\doxysubsubsection{\texorpdfstring{read\_file()}{read\_file()}}
+{\footnotesize\ttfamily void read\+\_\+file (\begin{DoxyParamCaption}\item[{vector$<$ \mbox{\hyperlink{classstudentas}{studentas}} $>$ \&}]{sar,  }\item[{string}]{file,  }\item[{string}]{med,  }\item[{int}]{index }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{funkcijos_8cpp_source_l00016}{16}} of file \mbox{\hyperlink{funkcijos_8cpp_source}{funkcijos.\+cpp}}.
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{main_8h_aed2dae0bc1baa0d3c908be81729f0a83}\label{main_8h_aed2dae0bc1baa0d3c908be81729f0a83}} 
+\index{main.h@{main.h}!fileNames@{fileNames}}
+\index{fileNames@{fileNames}!main.h@{main.h}}
+\doxysubsubsection{\texorpdfstring{fileNames}{fileNames}}
+{\footnotesize\ttfamily const string file\+Names\mbox{[}5\mbox{]} = \{ \char`\"{}kursiokai1000.\+txt\char`\"{}, \char`\"{}kursiokai10000.\+txt\char`\"{}, \char`\"{}kursiokai100000.\+txt\char`\"{}, \char`\"{}kursiokai1000000.\+txt\char`\"{}, \char`\"{}kursiokai10000000.\+txt\char`\"{} \}}
+
+
+
+Definition at line \mbox{\hyperlink{main_8h_source_l00018}{18}} of file \mbox{\hyperlink{main_8h_source}{main.\+h}}.
+
+\mbox{\Hypertarget{main_8h_a36308d522582b956f320b18fc037d6a7}\label{main_8h_a36308d522582b956f320b18fc037d6a7}} 
+\index{main.h@{main.h}!outfileKiet@{outfileKiet}}
+\index{outfileKiet@{outfileKiet}!main.h@{main.h}}
+\doxysubsubsection{\texorpdfstring{outfileKiet}{outfileKiet}}
+{\footnotesize\ttfamily const string outfile\+Kiet\mbox{[}5\mbox{]} = \{ \char`\"{}kietiakai1000.\+txt\char`\"{}, \char`\"{}kietiakai10000.\+txt\char`\"{}, \char`\"{}kietiakai100000.\+txt\char`\"{}, \char`\"{}kietiakai1000000.\+txt\char`\"{}, \char`\"{}kietiakai10000000.\+txt\char`\"{} \}}
+
+
+
+Definition at line \mbox{\hyperlink{main_8h_source_l00019}{19}} of file \mbox{\hyperlink{main_8h_source}{main.\+h}}.
+
+\mbox{\Hypertarget{main_8h_a440398ec1f4c08cf97bb0e96de2aa9c2}\label{main_8h_a440398ec1f4c08cf97bb0e96de2aa9c2}} 
+\index{main.h@{main.h}!outfileVarg@{outfileVarg}}
+\index{outfileVarg@{outfileVarg}!main.h@{main.h}}
+\doxysubsubsection{\texorpdfstring{outfileVarg}{outfileVarg}}
+{\footnotesize\ttfamily const string outfile\+Varg\mbox{[}5\mbox{]} = \{ \char`\"{}vargsiukai1000.\+txt\char`\"{}, \char`\"{}vargsiukai10000.\+txt\char`\"{}, \char`\"{}vargsiukai100000.\+txt\char`\"{}, \char`\"{}vargsiukai1000000.\+txt\char`\"{}, \char`\"{}vargsiukai10000000.\+txt\char`\"{} \}}
+
+
+
+Definition at line \mbox{\hyperlink{main_8h_source_l00020}{20}} of file \mbox{\hyperlink{main_8h_source}{main.\+h}}.
+
+\mbox{\Hypertarget{main_8h_a423ec09d529597d980038193d44ca201}\label{main_8h_a423ec09d529597d980038193d44ca201}} 
+\index{main.h@{main.h}!P@{P}}
+\index{P@{P}!main.h@{main.h}}
+\doxysubsubsection{\texorpdfstring{P}{P}}
+{\footnotesize\ttfamily const string P\mbox{[}11\mbox{]} = \{ \char`\"{}0\char`\"{}, \char`\"{}1\char`\"{}, \char`\"{}2\char`\"{}, \char`\"{}3\char`\"{}, \char`\"{}4\char`\"{}, \char`\"{}5\char`\"{}, \char`\"{}6\char`\"{}, \char`\"{}7\char`\"{}, \char`\"{}8\char`\"{}, \char`\"{}9\char`\"{}, \char`\"{}10\char`\"{} \}}
+
+
+
+Definition at line \mbox{\hyperlink{main_8h_source_l00017}{17}} of file \mbox{\hyperlink{main_8h_source}{main.\+h}}.
+

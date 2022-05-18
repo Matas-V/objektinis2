@@ -3,7 +3,7 @@
 void studentas::setPazymys(int mpaz) {
   paz.reserve(paz.size() + 1);
   paz.push_back(mpaz);
-};
+}
 
 void studentas::setGalBal(string med) {
   rez = galutinis(med, paz, egz);
@@ -55,7 +55,7 @@ void read_file(vector <studentas>& sar, string file, string med, int index) {
       if (a.galBalas() == b.galBalas()) return a.getVardas() < b.getVardas();
       return a.galBalas() < b.galBalas();
     });
-
+    
     failoIsvedimas(sar, med, outfileKiet[index], outfileVarg[index]);
   } catch(const std::exception& e) {
     cout << "Failas " << file << " nerastas..." << '\n';

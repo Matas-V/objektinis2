@@ -61,6 +61,7 @@ int main() {
         mas.push_back(ivestis());
     }
     isvedimas(mas, mas.size(), med);
+    system("pause");
   }
 
   return 0;

@@ -39,10 +39,7 @@ class studentas : public zmogus {
   public:
     studentas() : rez(0), egz(0) { }
 
-    inline string getVardas() const { return vardas; }
     void setVardas(string mvardas) { vardas = mvardas; }
-
-    inline string getPavarde() const { return pavarde; }
     void setPavarde(string mpavarde) { pavarde = mpavarde; }
 
     inline vector<int> getPazymiai() const { return paz; }
