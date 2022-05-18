@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['zmogus_0',['zmogus',['../classzmogus.html',1,'zmogus'],['../classzmogus.html#a3cb03824ec8269cf401cbf615e440833',1,'zmogus::zmogus()']]]
+  ['vardas_0',['vardas',['../classzmogus.html#ab79ef7e33cb25ed93458a93f49579d34',1,'zmogus']]]
 ];
