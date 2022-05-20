@@ -28,6 +28,17 @@ TEST(studentas, TestGalBalMediana) {
   EXPECT_TRUE(a.galBalas() == value);
 }
 
+TEST(studentas, TestGalBalVidurkis) {
+  studentas a;
+  double value = 9;
+  a.setPazymys(3);
+  a.setPazymys(10);
+  a.setPazymys(8);
+  a.setEgzas(10);
+  a.setGalBal("0");
+  EXPECT_TRUE(a.galBalas() == value);
+}
+
 int main(int argc, char* argv[]) {
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
